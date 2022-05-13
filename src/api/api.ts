@@ -74,16 +74,16 @@ export function getJobDetail(id: string, param?: AnyObj) {
 }
 
 // 获取单个任务下发参数
-export function getJobParam(id: string) {
-  const url = `/api/v2/images/getJobParam/${id}`;
+export function getJobParam(id: string, param?: AnyObj) {
+  const str = getUrlParam(param);
+  const url = `/api/v2/images/getJobParam/${id}${str}`;
   return request.get(url, { global: true }).then((res: AxiosResponse) => res.data);
 }
 
 // 获取单个任务每一步详情
-export function getJobStepDetail(data: StringObj) {
-  const { id, stepID, uuid } = data;
-  const _uuid = uuid ? `&uuid=${uuid}` : '';
-  const url = `/api/v2/images/getLogsOf/${id}?stepID=${stepID}${_uuid}`;
+export function getJobStepDetail(id: string, data: AnyObj) {
+  const str = getUrlParam(data);
+  const url = `/api/v2/images/getLogsOf/${id}${str}`;
   return request.get(url, { global: true }).then((res: AxiosResponse) => res.data);
 }
 

@@ -11,13 +11,19 @@ defineComponent({
 const route = useRoute();
 // 详情id
 const id = (route.params.id || '') as string;
+const fromIso = route?.fullPath?.includes('/build-iso/');
+const param = fromIso
+  ? {
+      jobtype: 'buildimagefromiso',
+    }
+  : {};
 const detail = ref({} as AnyObj);
 const defaultPackages = ref([]);
 const custom = ref([]);
 // 暂时使用假数据展示进度条
 const percentage = ref(0);
 if (id) {
-  getJobParam(id).then((res) => {
+  getJobParam(id, param).then((res) => {
     detail.value = res.data || {};
     defaultPackages.value = detail.value?.BasePkg?.split(',') || [];
     custom.value = (detail.value?.CustomPkg && detail.value.CustomPkg.split(',')) || [];
@@ -49,12 +55,6 @@ const download = () => {
   }
 };
 const stop = () => {
-  const fromIso = route?.fullPath?.includes('/build-iso/');
-  const param = fromIso
-    ? {
-        jobtype: 'buildimagefromiso',
-      }
-    : {};
   stopJob(id, param).then(() => {
     detail.value.Status = 'stopped';
   });

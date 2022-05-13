@@ -20,6 +20,12 @@ defineProps({
 const emit = defineEmits(['complete']);
 const route = useRoute();
 const id = (route.params.id || '') as string;
+const fromIso = route?.fullPath?.includes('/build-iso/');
+const param = fromIso
+  ? {
+      jobtype: 'buildimagefromiso',
+    }
+  : {};
 const statusMap: AnyObj = {
   StepStart: 'waiting',
   StepCreated: 'waiting',
@@ -49,12 +55,6 @@ const calcTime = (data: StringObj) => {
 };
 let timer: NodeJS.Timeout;
 const queryJob = (type?: string) => {
-  const fromIso = route?.fullPath?.includes('/build-iso/');
-  const param = fromIso
-    ? {
-        jobtype: 'buildimagefromiso',
-      }
-    : {};
   getJobDetail(id, param).then((res) => {
     if (res.data) {
       const { data } = res;
@@ -138,11 +138,11 @@ const handleChange = () => {
     // 值加载过一遍不用加载第二遍
     if (findOne && findOne.uuid !== 'end') {
       const params = {
-        id,
         stepID: key,
         uuid: findOne.uuid,
+        ...param,
       };
-      getJobStepDetail(params).then((res) => {
+      getJobStepDetail(id, params).then((res) => {
         const { code, data } = res;
         if (code === 200) {
           const { log, stopOK, uuid } = data;
