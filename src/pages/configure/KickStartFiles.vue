@@ -235,9 +235,17 @@ const handleChange = (files: UploadFile) => {
         margin-left: 16px;
       }
     }
-  }
-  .operate {
-    line-height: 32px;
+    .operate {
+      line-height: 32px;
+    }
+    &-editer {
+      position: relative;
+      z-index: 2;
+    }
+    &-table {
+      position: relative;
+      z-index: 1;
+    }
   }
 }
 </style>
