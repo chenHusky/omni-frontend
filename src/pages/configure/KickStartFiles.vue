@@ -5,6 +5,7 @@ import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus';
 import { getUserAuth } from '@/shared/utils/login';
 import { deletekickStart, getKickStartList, updateKickStart } from '@/api/api';
 import { AnyObj } from '@/shared/interface/interface';
+import { dateFormat } from '../../shared/utils/common';
 
 const dialog = ref<null | AnyObj>(null);
 const upData = ref({
@@ -174,8 +175,16 @@ const handleChange = (files: UploadFile) => {
               <span v-else>{{ scope.row.Desc }}</span>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip prop="CreateTime" label="Created At" />
-          <el-table-column show-overflow-tooltip prop="UpdateTime" label="Updated At" />
+          <el-table-column show-overflow-tooltip prop="CreateTime" label="Created At">
+            <template #default="scope">
+              <span>{{ dateFormat(scope.row.CreateTime) }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column show-overflow-tooltip prop="UpdateTime" label="Updated At">
+            <template #default="scope">
+              <span>{{ dateFormat(scope.row.UpdateTime) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column label="Operate">
             <template #default="scope">
               <div class="operate">

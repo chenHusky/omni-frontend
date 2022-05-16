@@ -7,6 +7,7 @@ import { AnyObj, JobListfilterConfig, JobListFilterType, JobStatus } from '@/sha
 import { useStoreData } from '@/shared/utils/login';
 import TableTag from './TableTag.vue';
 import DialogModal from './DialogModal.vue';
+import { dateFormat } from '../shared/utils/common';
 const props = defineProps({
   tableData: {
     type: Array,
@@ -182,7 +183,11 @@ const tableCol = {
     <el-table-column show-overflow-tooltip prop="JobName" label="ID" />
     <el-table-column show-overflow-tooltip prop="JobLabel" label="Name" />
     <el-table-column show-overflow-tooltip prop="JobDesc" label="Description" />
-    <el-table-column show-overflow-tooltip prop="CreateTime" label="Create Time" />
+    <el-table-column show-overflow-tooltip prop="CreateTime" label="Create Time">
+      <template #default="scope">
+        <span>{{ dateFormat(scope.row.CreateTime) }}</span>
+      </template>
+    </el-table-column>
     <el-table-column label="Operate">
       <template #default="scope">
         <div>
