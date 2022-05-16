@@ -83,3 +83,32 @@ export function isCheckEmpty(data: any, strict = false): boolean {
   }
   return [...strictArr, 0, false].includes(data);
 }
+
+/**
+ * 格式化时间
+ */
+export function dateFormat(time: string) {
+  const date = new Date(time);
+  if (date.getTime() < 0) {
+    return '--';
+  }
+  const Year = date.getFullYear();
+  const Month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+  const Day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
+  const Hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+  const Minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const Second = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+  const GMTt = -date.getTimezoneOffset() / 60;
+  let GMTs;
+  if (GMTt >= 0 && GMTt < 10) {
+    GMTs = `+0${GMTt}00`;
+  } else if (GMTt >= 10) {
+    GMTs = `+${GMTt}00`;
+  } else if (GMTt < 0 && GMTt > -10) {
+    GMTs = `0${GMTt}00`;
+  } else {
+    GMTs = `${GMTt}00`;
+  }
+  const formatTime = `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second} UTC${GMTs}`;
+  return formatTime;
+}
