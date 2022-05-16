@@ -93,22 +93,14 @@ export function dateFormat(time: string) {
     return '--';
   }
   const Year = date.getFullYear();
-  const Month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-  const Day = date.getDate() >= 10 ? date.getDate() : `0${date.getDate()}`;
-  const Hour = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
-  const Minute = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
-  const Second = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+  const Month = date.getMonth() + 1 >= 10 ? date.getMonth() + 1 : `${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+  const Day = date.getDate() >= 10 ? date.getDate() : `${date.getDate().toString().padStart(2, '0')}`;
+  const Hour = date.getHours() < 10 ? `${date.getHours().toString().padStart(2, '0')}` : date.getHours();
+  const Minute = date.getMinutes() < 10 ? `${date.getMinutes().toString().padStart(2, '0')}` : date.getMinutes();
+  const Second = date.getSeconds() < 10 ? `${date.getSeconds().toString().padStart(2, '0')}` : date.getSeconds();
   const GMTt = -date.getTimezoneOffset() / 60;
-  let GMTs;
-  if (GMTt >= 0 && GMTt < 10) {
-    GMTs = `+0${GMTt}00`;
-  } else if (GMTt >= 10) {
-    GMTs = `+${GMTt}00`;
-  } else if (GMTt < 0 && GMTt > -10) {
-    GMTs = `0${GMTt}00`;
-  } else {
-    GMTs = `${GMTt}00`;
-  }
+  const GMTt_symble = GMTt > 0 ? '+' : '-';
+  const GMTs = `${GMTt_symble}${Math.abs(GMTt).toString().padStart(2, '0')}00`;
   const formatTime = `${Year}-${Month}-${Day} ${Hour}:${Minute}:${Second} UTC${GMTs}`;
   return formatTime;
 }
