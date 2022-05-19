@@ -21,7 +21,7 @@ const editImg = (data: AnyObj) => {
   data.edit = true;
 };
 const save = (data: AnyObj) => {
-  // name与desc不能为空否则不能保存
+  // name,desc与arch不能为空否则不能保存
   if (data.Name && data.Desc && data.Arch && data.Checksum) {
     const param = {
       id: data.ID,
@@ -149,7 +149,7 @@ const handleCurrentChange = (page: number) => {
                 <a
                   v-if="scope.row.edit"
                   class="m-r-8"
-                  :class="scope.row.Desc && scope.row.Name ? 'app-text-btn' : 'app-disable-text-btn'"
+                  :class="scope.row.Desc && scope.row.Name && scope.row.Arch ? 'app-text-btn' : 'app-disable-text-btn'"
                   @click="save(scope.row)"
                 >
                   Save
