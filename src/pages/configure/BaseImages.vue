@@ -21,7 +21,7 @@ const editImg = (data: AnyObj) => {
   data.edit = true;
 };
 const save = (data: AnyObj) => {
-  // name与desc不能为空否则不能保存
+  // name,desc与arch不能为空否则不能保存
   if (data.Name && data.Desc && data.Arch && data.Checksum) {
     const param = {
       id: data.ID,
@@ -142,19 +142,14 @@ const handleCurrentChange = (page: number) => {
               <span v-else>{{ scope.row.Arch }}</span>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip prop="Checksum" label="Checksum">
-            <template #default="scope">
-              <el-input v-if="scope.row.edit" v-model="scope.row.Checksum"> </el-input>
-              <span v-else>{{ scope.row.Checksum }}</span>
-            </template></el-table-column
-          >
+          <el-table-column show-overflow-tooltip prop="Checksum" label="Checksum" />
           <el-table-column label="Operation" width="158">
             <template #default="scope">
               <div class="operate">
                 <a
                   v-if="scope.row.edit"
                   class="m-r-8"
-                  :class="scope.row.Desc && scope.row.Name ? 'app-text-btn' : 'app-disable-text-btn'"
+                  :class="scope.row.Desc && scope.row.Name && scope.row.Arch ? 'app-text-btn' : 'app-disable-text-btn'"
                   @click="save(scope.row)"
                 >
                   Save
