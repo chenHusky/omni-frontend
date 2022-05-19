@@ -142,12 +142,7 @@ const handleCurrentChange = (page: number) => {
               <span v-else>{{ scope.row.Arch }}</span>
             </template>
           </el-table-column>
-          <el-table-column show-overflow-tooltip prop="Checksum" label="Checksum">
-            <template #default="scope">
-              <el-input v-if="scope.row.edit" v-model="scope.row.Checksum"> </el-input>
-              <span v-else>{{ scope.row.Checksum }}</span>
-            </template></el-table-column
-          >
+          <el-table-column show-overflow-tooltip prop="Checksum" label="Checksum" />
           <el-table-column label="Operation" width="158">
             <template #default="scope">
               <div class="operate">
