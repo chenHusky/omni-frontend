@@ -85,6 +85,13 @@ const handleCurrentChange = (page: number) => {
   currentPage.value = page;
   getTableList();
 };
+// Arch选项
+const options = [
+  {
+    value: 'x86_64',
+    label: 'x86_64',
+  },
+];
 </script>
 
 <template>
@@ -111,7 +118,9 @@ const handleCurrentChange = (page: number) => {
         </div>
         <span>Arch</span>
         <div class="main-body-create-input">
-          <el-input v-model="upData.arch" maxlength="128" placeholder="Please input" />
+          <el-select v-model="upData.arch" placeholder="Please select">
+            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
         </div>
         <el-button type="primary" :disabled="disableBtn" @click="importImages()">Import Images</el-button>
       </div>
@@ -138,7 +147,9 @@ const handleCurrentChange = (page: number) => {
           >
           <el-table-column show-overflow-tooltip prop="Arch" label="Architecture"
             ><template #default="scope">
-              <el-input v-if="scope.row.edit" v-model="scope.row.Arch"> </el-input>
+              <el-select v-if="scope.row.edit" v-model="scope.row.Arch">
+                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option
+              ></el-select>
               <span v-else>{{ scope.row.Arch }}</span>
             </template>
           </el-table-column>
