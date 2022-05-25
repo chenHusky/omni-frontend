@@ -156,5 +156,5 @@ export function getImagesAndKickStart() {
 // 以ISO创建任务
 export function buildFromIso(data: AnyObj) {
   const url = '/api/v3/images/buildFromIso';
-  return request.post(url, data, { global: true }).then((res: AxiosResponse) => res.data);
+  return request.post(url, data, { global: true, $doException: 'true' }).then((res: AxiosResponse) => res.data);
 }

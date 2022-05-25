@@ -5,8 +5,10 @@ import handleResponse from './handleResponse';
 import handleError from './handleError';
 import setConfig from './setConfig';
 import { getUserAuth, tokenFailIndicateLogin } from '../utils/login';
+import doException from './doException';
+import { RequestConfigMap } from './interface';
 
-interface RequestConfig<D = any> extends AxiosRequestConfig {
+interface RequestConfig<D = any> extends RequestConfigMap {
   data?: D;
   global?: boolean; // 是否为全局请求， 全局请求在清除请求池时，不清除
 }
@@ -102,6 +104,8 @@ const responseInterceptorId = request.interceptors.response.use(
       // 无效token跳转登录
       if (err.code === '401') {
         tokenFailIndicateLogin();
+      } else {
+        doException(err);
       }
     }
     // 没有response(没有状态码)的情况
