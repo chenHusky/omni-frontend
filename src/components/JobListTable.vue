@@ -7,6 +7,7 @@ import { AnyObj, JobListfilterConfig, JobListFilterType, JobStatus } from '@/sha
 import { useStoreData } from '@/shared/utils/login';
 import TableTag from './TableTag.vue';
 import DialogModal from './DialogModal.vue';
+import DownloadModal from './DownloadModal.vue';
 import { dateFormat } from '../shared/utils/common';
 const props = defineProps({
   tableData: {
@@ -19,6 +20,7 @@ const props = defineProps({
   },
 });
 const dialog = ref<null | AnyObj>(null);
+const downloadModal = ref<null | AnyObj>(null);
 
 // 表格过滤内容
 const tabFilterObj = ref({
@@ -139,9 +141,15 @@ const tableCol = {
     label: 'Architecture',
   },
 };
+const download = (id: string) => {
+  downloadModal?.value?.open({
+    id,
+  });
+};
 </script>
 <template>
   <DialogModal ref="dialog"></DialogModal>
+  <DownloadModal ref="downloadModal"></DownloadModal>
   <TableTag :table-col="tableCol" :model-value="tabFilterObj" @update:model-value="update($event)"></TableTag>
   <el-table :data="tableData" style="width: 100%" @filter-change="filterHandler" @selection-change="handleSelectionChange">
     <el-table-column v-if="model !== 'simple'" type="selection" width="55" />
@@ -199,7 +207,7 @@ const tableCol = {
     <el-table-column label="Download">
       <template #default="scope">
         <div>
-          <a v-if="scope.row.Status === 'succeed'" :href="scope.row.DownloadUrl" class="app-text-btn" download="file">Download</a>
+          <a v-if="scope.row.Status === 'succeed'" class="app-text-btn" @click="download(scope.row.JobName)">Download</a>
           <span v-else>
             <span class="app-disable-text-btn">Download</span>
             <el-tooltip placement="top" :content="getHelpTips(scope.row.Status)">

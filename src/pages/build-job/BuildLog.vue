@@ -18,6 +18,7 @@ const param = fromIso
     }
   : {};
 const detail = ref({} as AnyObj);
+const downloadModal = ref<null | AnyObj>(null);
 const defaultPackages = ref([]);
 const custom = ref([]);
 // 暂时使用假数据展示进度条
@@ -47,11 +48,9 @@ const complete = (e: AnyObj) => {
 };
 const download = () => {
   if (detail.value.Status === 'succeed') {
-    const a = document.createElement('a');
-    a.href = detail.value.DownloadUrl;
-    a.download = detail.value.JobLabel || 'download';
-    a.click();
-    document.body.removeChild(a);
+    downloadModal?.value?.open({
+      id: detail.value.JobName,
+    });
   }
 };
 const stop = () => {
@@ -64,6 +63,7 @@ const getStatusTitle = (status: string) => {
 };
 </script>
 <template>
+  <DownloadModal ref="downloadModal"></DownloadModal>
   <div class="build">
     <div class="build-left">
       <div class="build-left-running">

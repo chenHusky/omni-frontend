@@ -158,3 +158,9 @@ export function buildFromIso(data: AnyObj) {
   const url = '/api/v3/images/buildFromIso';
   return request.post(url, data, { global: true, $doException: 'true' }).then((res: AxiosResponse) => res.data);
 }
+
+// 查询下载接口
+export function getRepositoryDownlad(id: string) {
+  const url = `/api/v3/getRepositoryDownlad/${id}`;
+  return request.get(url).then((res: AxiosResponse) => res.data);
+}

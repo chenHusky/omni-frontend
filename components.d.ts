@@ -8,6 +8,7 @@ declare module 'vue' {
     AppFooter: typeof import('./src/components/AppFooter.vue')['default']
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
     DialogModal: typeof import('./src/components/DialogModal.vue')['default']
+    DownloadModal: typeof import('./src/components/DownloadModal.vue')['default']
     EditorComponent: typeof import('./src/components/EditorComponent.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCollapse: typeof import('element-plus/es')['ElCollapse']

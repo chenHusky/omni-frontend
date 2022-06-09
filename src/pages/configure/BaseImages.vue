@@ -7,6 +7,7 @@ const dialog = ref<null | AnyObj>(null);
 const upData = ref({
   name: '',
   desc: '',
+  algorithm: '',
   arch: '',
   checksum: '',
   url: '',
@@ -53,6 +54,7 @@ const importImages = () => {
     getTableList();
     upData.value.name = '';
     upData.value.arch = '';
+    upData.value.algorithm = '';
     upData.value.desc = '';
     upData.value.url = '';
     upData.value.checksum = '';
@@ -74,7 +76,7 @@ const deleteImg = (data: string) => {
 };
 
 const disableBtn = computed(() => {
-  return !Boolean(upData.value.desc && upData.value.name && upData.value.arch && upData.value.checksum && upData.value.url);
+  return !Boolean(upData.value.desc && upData.value.name && upData.value.arch && upData.value.checksum && upData.value.url && upData.value.algorithm);
 });
 // 分页器
 const handleSizeChange = (size: number) => {
@@ -90,6 +92,14 @@ const options = [
   {
     value: 'x86_64',
     label: 'x86_64',
+  },
+];
+
+// Algorithm选项
+const algorithmOptions = [
+  {
+    value: 'sha256',
+    label: 'sha256',
   },
 ];
 </script>
@@ -108,6 +118,12 @@ const options = [
         <div class="main-body-create-input">
           <el-input v-model="upData.desc" maxlength="512" placeholder="Please input" />
         </div>
+        <span>Algorithm</span>
+        <div class="main-body-create-input">
+          <el-select v-model="upData.algorithm" placeholder="Please select">
+            <el-option v-for="item in algorithmOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+          </el-select>
+        </div>
         <span>Checksum</span>
         <div class="main-body-create-input">
           <el-input v-model="upData.checksum" maxlength="256" placeholder="Please input SHA-256" />
@@ -122,8 +138,8 @@ const options = [
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
         </div>
-        <el-button type="primary" :disabled="disableBtn" @click="importImages()">Import Images</el-button>
       </div>
+      <el-button type="primary" :disabled="disableBtn" @click="importImages()">Import Images</el-button>
       <div class="main-body-table m-t-16 m-b-24">
         <div class="main-body-table-btn">
           <el-icon :size="25" @click="refreshData()">
@@ -153,6 +169,7 @@ const options = [
               <span v-else>{{ scope.row.Arch }}</span>
             </template>
           </el-table-column>
+          <el-table-column show-overflow-tooltip prop="Algorithm" label="Algorithm" />
           <el-table-column show-overflow-tooltip prop="Checksum" label="Checksum" />
           <el-table-column label="Operation" width="158">
             <template #default="scope">
@@ -198,9 +215,12 @@ const options = [
   &-body {
     padding: 40px;
     &-create {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 5% 25% 5% 25% 5% 25%;
+      grid-row-gap: 16px;
       font-size: 18px;
+      margin-bottom: 16px;
+      line-height: 32px;
       &-input {
         width: 168px;
         margin-left: 24px;
