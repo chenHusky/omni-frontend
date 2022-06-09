@@ -30,7 +30,7 @@ defineExpose({ open });
 <template>
   <el-dialog v-model="visable" :title="headerTitle" width="30%" draggable center>
     <span>{{ content }}</span>
-    <div class="btn">
+    <div class="downloadBtn">
       <a class="app-text-btn" :href="isoHref" download="file">download iso</a>
       <a class="app-text-btn" :href="sumHref" download="file">download checksum</a>
     </div>
@@ -42,7 +42,7 @@ defineExpose({ open });
   </el-dialog>
 </template>
 <style lang="scss" scoped>
-.btn {
+.downloadBtn {
   display: flex;
   justify-content: space-around;
   padding: 16px 40px 0px;
