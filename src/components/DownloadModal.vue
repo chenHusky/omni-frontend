@@ -41,7 +41,7 @@ defineExpose({ open });
     </template>
   </el-dialog>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 .btn {
   display: flex;
   justify-content: space-around;
