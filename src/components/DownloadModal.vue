@@ -15,8 +15,8 @@ const request = (id: string) => {
   getRepositoryDownlad(id).then((res) => {
     const { data, title } = res;
     const _data = JSON.parse(data);
-    isoHref.value = _data.imagePath ? title + _data.imagePath : '';
-    sumHref.value = _data.checksumPath ? title + _data.checksumPath : '';
+    isoHref.value = _data.imagePath && _data.imagePath?.includes('http') ? _data.imagePath : title + _data.imagePath;
+    sumHref.value = _data.checksumPath && _data.checksumPath?.includes('http') ? _data.checksumPath : title + _data.checksumPath;
   });
 };
 const open = (params: Param) => {
